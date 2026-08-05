@@ -643,37 +643,37 @@ begin
     );
   end;
 
-  if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].tPlatformAtual <> bpWin32) and
-     (ChkBoxClicado.Checked) then
-  begin
-    //Ligar instalacao win32 da IDE correspondente...
-    I := (ChkBoxClicado.Tag - 1);
-    while I >= 0 do
-    begin
-      if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].InstalacaoAtual =
-          FUmaListaPlataformasAlvos[i].InstalacaoAtual) and
-         (FUmaListaPlataformasAlvos[i].tPlatformAtual = bpWin32) then
-      begin
-        FListaCheckBoxPlataformas[i].Checked := True;
-      end;
-      Dec(I);
-    end;
-  end
-  else if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].tPlatformAtual = bpWin32) and
-     (not ChkBoxClicado.Checked) then
-  begin
-    //Desligar todas instalacoes nao win32.
-    I := (ChkBoxClicado.Tag + 1);
-    repeat
-      if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].InstalacaoAtual =
-          FUmaListaPlataformasAlvos[i].InstalacaoAtual) and
-         (FUmaListaPlataformasAlvos[i].tPlatformAtual <> bpWin32)then
-      begin
-        FListaCheckBoxPlataformas[i].Checked := False;
-      end;
-      Inc(I);
-    until (I = FUmaListaPlataformasAlvos.Count);
-  end;
+//  if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].tPlatformAtual <> bpWin32) and
+//     (ChkBoxClicado.Checked) then
+//  begin
+//    //Ligar instalacao win32 da IDE correspondente...
+//    I := (ChkBoxClicado.Tag - 1);
+//    while I >= 0 do
+//    begin
+//      if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].InstalacaoAtual =
+//          FUmaListaPlataformasAlvos[i].InstalacaoAtual) and
+//         (FUmaListaPlataformasAlvos[i].tPlatformAtual = bpWin32) then
+//      begin
+//        FListaCheckBoxPlataformas[i].Checked := True;
+//      end;
+//      Dec(I);
+//    end;
+//  end
+//  else if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].tPlatformAtual = bpWin32) and
+//     (not ChkBoxClicado.Checked) then
+//  begin
+//    //Desligar todas instalacoes nao win32.
+//    I := (ChkBoxClicado.Tag + 1);
+//    repeat
+//      if (FUmaListaPlataformasAlvos[ChkBoxClicado.Tag].InstalacaoAtual =
+//          FUmaListaPlataformasAlvos[i].InstalacaoAtual) and
+//         (FUmaListaPlataformasAlvos[i].tPlatformAtual <> bpWin32)then
+//      begin
+//        FListaCheckBoxPlataformas[i].Checked := False;
+//      end;
+//      Inc(I);
+//    until (I = FUmaListaPlataformasAlvos.Count);
+//  end;
 
 //
 //  // C++ Builder a partir do D2006, versões anteriores tem IDE independentes.
