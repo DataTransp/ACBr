@@ -116,7 +116,7 @@ type
 
     function GetURLConsulta(const CUF: integer;
       const TipoAmbiente: TpcnTipoAmbiente;
-      const Versao: Double): String;
+      const Versao: Double): String; virtual;
     function GetURLQRCode(FMDFe: TMDFe): String;
 
     function IdentificaSchema(const AXML: String): TSchemaMDFe;
