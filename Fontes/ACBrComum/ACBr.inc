@@ -51,13 +51,13 @@
 // Comente a linha abaixo, se você quer que seu Executável dependa das DLLs LibXMLSEC (NAO RECOMENDADO)
 {$DEFINE DFE_SEM_XMLSEC}
 // Descomente a linha abaixo, se você quer que seu Executável NÃO dependa das DLLs LibXML2. (NAO RECOMENDADO)
-{.$DEFINE DFE_SEM_LIBXML2}
+{$DEFINE DFE_SEM_LIBXML2}
 // Descomente a linha abaixo, se você não utiliza a obsoleta Capicom para Criptografia (RECOMENDADO)
 {$DEFINE DFE_SEM_CAPICOM}
 // Descomente a linha abaixo, se você não utiliza a obsoleta MSXML para Assinatura de XML (RECOMENDADO)
 {$DEFINE DFE_SEM_MSXML}
 // Descomente a linha abaixo, se você não deseja adicionar a Dependência da INDY nos seus Projetos
-{.$DEFINE DFE_SEM_INDY}
+{$DEFINE DFE_SEM_INDY}
 // Descomente a linha abaixo, se você deseja que sejam utilizadas as classes baseadas na ACBrXMLDocument
 // Utilização do ACBrXMLDocument obrigatória para as tags da Reforma Tributária nos documentos fiscais
 // se estiver comentado, não será gerado nos XML.

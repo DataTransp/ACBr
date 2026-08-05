@@ -507,7 +507,7 @@ begin
     RemoverDiretoriosACBrDoPath;
     InformaSituacao('...OK');
 
-    if tPlatformAtual = bpWin32 then
+    if tPlatformAtual in [bpWin32, bpWin64] then
     begin
       InformaSituacao('Removendo pacotes 32bits da instalação anterior do ACBr na IDE...');
       RemoverPacotesAntigos;
@@ -534,7 +534,7 @@ begin
     InformaProgresso;
 
     // -- adicionar ao environment variables do delphi
-    if tPlatformAtual = bpWin32 then
+    if tPlatformAtual in [bpWin32, bpWin64] then
     begin
       InformaSituacao('Alterando a variável de ambiente PATH do Delphi...');
       AdicionaEnvironmentPathNaVersaoEspecificaDoDelphi('acbr');
@@ -952,12 +952,13 @@ end;
 procedure TACBrInstallComponentes.InstalarLibXml2(ADestino: TDestino; const APathBin: string);
 begin
   if ADestino <> tdNone then
-  begin
-    CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libexslt.dll', APathBin);
-    CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libiconv.dll', APathBin);
-    CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxml2.dll',  APathBin);
-    CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxslt.dll',  APathBin);
-  end;
+    if FUmaPlataformaDestino.tPlatformAtual = bpWin32 then
+    begin
+      CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libexslt.dll', APathBin);
+      CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libiconv.dll', APathBin);
+      CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxml2.dll',  APathBin);
+      CopiarArquivoDLLTo(ADestino,'LibXml2\x86\libxslt.dll',  APathBin);
+    end;
 end;
 
 procedure TACBrInstallComponentes.InstalarOpenSSL(ADestino: TDestino; const APathBin: string);
@@ -965,10 +966,16 @@ begin
 // copia as dlls da pasta openssl, estas dlls são utilizadas para assinar
 // arquivos e outras coisas mais
   if ADestino <> tdNone then
-  begin
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x86\libcrypto-1_1.dll', APathBin);
-    CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x86\libssl-1_1.dll', APathBin);
-  end;
+    if FUmaPlataformaDestino.tPlatformAtual = bpWin32 then
+    begin
+      CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x86\libcrypto-1_1.dll', APathBin);
+      CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x86\libssl-1_1.dll', APathBin);
+    end
+    else if FUmaPlataformaDestino.tPlatformAtual = bpWin64 then
+    begin
+      CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x64\libcrypto-1_1-x64.dll', APathBin);
+      CopiarArquivoDLLTo(ADestino,'OpenSSL\1.1.1.10\x64\libssl-1_1-x64.dll', APathBin);
+    end;
 end;
 
 procedure TACBrInstallComponentes.InstalarOutrosRequisitos;
@@ -979,7 +986,7 @@ begin
     // *************************************************************************
     // deixar somente a pasta lib se for configurado assim
     // *************************************************************************
-    if OpcoesInstall.DeixarSomentePastasLib and (tPlatformAtual in [bpWin32{, bpWin64}]) then
+    if OpcoesInstall.DeixarSomentePastasLib and (tPlatformAtual in [bpWin32, bpWin64]) then
     begin
       try
         DeixarSomenteLib;
@@ -1008,8 +1015,7 @@ begin
     if (FCountErros = 0) then
     begin
       // Copiar apenas dlls na plataforma da IDE Win32.
-      if (tPlatformAtual = bpWin32) and
-         ((OpcoesInstall.sDestinoDLLs = tdDelphi) or (not FJaCopiouDLLs)) then
+      if (tPlatformAtual in [bpWin32, bpWin64]) and ((OpcoesInstall.sDestinoDLLs = tdDelphi) or (not FJaCopiouDLLs)) then
       begin
         FazInstalacaoDLLs(IncludeTrailingPathDelimiter(InstalacaoAtual.BinFolderName));
         FJaCopiouDLLs := True;
@@ -1167,7 +1173,7 @@ begin
     // *************************************************************************
     // compilar os pacotes primeiramente
     // *************************************************************************
-    if not (tPlatformAtual in [bpWin32{, bpWin64}]) then
+    if not (tPlatformAtual in [bpWin32, bpWin64]) then
     begin
       InformaSituacao(sLineBreak+'No momento não estamos compilando os pacotes da plataforma ' + sPlatform +'.');
       Exit;
@@ -1185,7 +1191,7 @@ begin
       Exit;
     end;
 
-    if ( tPlatformAtual = bpWin32) then
+    if tPlatformAtual in [bpWin32, bpWin64] then
     begin
       InformaSituacao(sLineBreak+'INSTALANDO OS PACOTES...');
       InstalarPacotes(OpcoesInstall.DiretorioRaizACBr, ListaPacotes);
@@ -1244,7 +1250,7 @@ begin
     end;
 
     //Compilar também o pacote Design Time se a plataforma form Win32
-    if (FUmaPlataformaDestino.tPlatformAtual = bpWin32) and FileExists(sDirPackage + 'DCL'+ NomePacote) then
+    if (FUmaPlataformaDestino.tPlatformAtual in [bpWin32, bpWin64]) and FileExists(sDirPackage + 'DCL'+ NomePacote) then
     begin
       FazLog('');
       FPacoteAtual := sDirPackage + 'DCL'+ NomePacote;
